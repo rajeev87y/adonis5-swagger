@@ -34,6 +34,9 @@ export default class GenerateSwaggerFile extends BaseCommand {
 		}
 
 		const filePath = join(this.application.appRoot, this.config.get('swagger.specFilePath'))
-		await fs.writeFile(filePath, JSON.stringify(swaggerFileContent))
-	}
+		if(!this.config.get('swagger.options.format') || this.config.get('swagger.options.format') === '.json') {
+			await fs.writeFile(filePath, JSON.stringify(swaggerFileContent))
+		}else{
+			await fs.writeFile(filePath, swaggerFileContent)
+		}
 }
